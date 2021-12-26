@@ -1,7 +1,7 @@
 QT += core
 QT += sql
 
-INCLUDEPATH+=$$PWD/src
+#INCLUDEPATH+=$$PWD/src
 
 HEADERS += \
     $$PWD/src/token_global.h \
