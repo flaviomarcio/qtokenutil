@@ -1,7 +1,8 @@
 QT += core
 QT += sql
 
-#INCLUDEPATH+=$$PWD/src
+QTREFORCE_QTOKENUTIL=true
+DEFINES+=QTREFORCE_QTOKENUTIL
 
 HEADERS += \
     $$PWD/src/token_global.h \
