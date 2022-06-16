@@ -63,7 +63,7 @@ static const auto supportedAlgorithms=QJsonWebToken::supportedAlgorithms();
 
 
 #define dPvt()\
-auto&p = *reinterpret_cast<TokenUtilPvt*>(this->p)
+auto &p = *reinterpret_cast<TokenUtilPvt*>(this->p)
 
 class TokenUtilPvt{
 public:
@@ -180,7 +180,7 @@ QVariant&TokenUtil::lastError() const
     return p.lastError;
 }
 
-bool TokenUtil::setLastError(const QVariant&value)
+bool TokenUtil::setLastError(const QVariant &value)
 {
     dPvt();
     auto err=value.toString().trimmed();
@@ -201,7 +201,7 @@ const QHash<eTokAlgorithm, QByteArray> &TokenUtil::algorithmStr()
 eTokAlgorithm TokenUtil::algorithm(const QByteArray&alg)
 {
     auto sAlg=alg.trimmed().toLower();
-    auto&map=TokenUtil::algorithmType();
+    auto &map=TokenUtil::algorithmType();
     if(!map.contains(sAlg))
         return HS256;
     return map.value(sAlg);
@@ -222,7 +222,7 @@ const QByteArray TokenUtil::eTokTypeToStr(const eTokType &type)
 bool TokenUtil::isValidAlgorithm(const QByteArray &alg)
 {
     auto sAlg=alg.trimmed().toLower();
-    auto&map=TokenUtil::algorithmType();
+    auto &map=TokenUtil::algorithmType();
     if(map.contains(sAlg))
         return true;
     return false;
@@ -305,8 +305,8 @@ Token TokenUtil::generateToken(const QByteArray&secret, const QHash<QByteArray, 
     QHashIterator<QByteArray,QByteArray> i(tokenPayLoad);
     while (i.hasNext()) {
         i.next();
-        const auto&key=i.key();
-        const auto&value=i.value();
+        const auto &key=i.key();
+        const auto &value=i.value();
         m_jwtObj.appendClaim(key, value);
     }
 
