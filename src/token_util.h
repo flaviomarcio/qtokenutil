@@ -89,6 +89,7 @@ public:
     QVariantHash toReturnHash() const;
 };
 
+class TokenUtilPvt;
 //!
 //! \brief The TokenUtil class
 //!
@@ -287,7 +288,7 @@ public:
     static bool verifyToken(const QByteArray&token, const QByteArray&secret);
 
 private:
-    void*p=nullptr;
+    TokenUtilPvt *p=nullptr;
 };
 
 }

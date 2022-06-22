@@ -47,12 +47,12 @@ auto makeJwtAlgorithmStr()
 static const auto jwtAlgorithmType=makeAlgorithmType();
 static auto jwtAlgorithmStr=makeJwtAlgorithmStr();
 
-static const auto claim_exp = QByteArrayLiteral("exp");
-static const auto claim_iss = QByteArrayLiteral("iss");
-static const auto claim_iat = QByteArrayLiteral("iat");
-static const auto claim_aud = QByteArrayLiteral("aud");
-static const auto claim_sub = QByteArrayLiteral("sub");
-static const auto claim_tsp = QByteArrayLiteral("tsp");
+static const auto claim_exp = "exp";
+static const auto claim_iss = "iss";
+static const auto claim_iat = "iat";
+static const auto claim_aud = "aud";
+static const auto claim_sub = "sub";
+static const auto claim_tsp = "tsp";
 
 
 auto makeClaims(){
@@ -63,7 +63,7 @@ static const auto supportedAlgorithms=QJsonWebToken::supportedAlgorithms();
 
 
 #define dPvt()\
-auto &p = *reinterpret_cast<TokenUtilPvt*>(this->p)
+    auto &p = *reinterpret_cast<TokenUtilPvt*>(this->p)
 
 class TokenUtilPvt{
 public:
@@ -93,11 +93,11 @@ const QByteArray Token::toMd5(const QByteArray&bytes)
 QVariantHash Token::toReturnHash()const
 {
     return QVariantHash
-        {
-            {QByteArrayLiteral("token"),this->token},
-            {QByteArrayLiteral("iat"),this->tokenIat},
-            {QByteArrayLiteral("exp"),this->tokenExp}
-        };
+    {
+        {QByteArrayLiteral("token"),this->token},
+        {QByteArrayLiteral("iat"),this->tokenIat},
+        {QByteArrayLiteral("exp"),this->tokenExp}
+    };
 }
 
 TokenUtil::TokenUtil(QObject *parent) : QObject(parent)
@@ -108,61 +108,59 @@ TokenUtil::TokenUtil(QObject *parent) : QObject(parent)
 TokenUtil::TokenUtil(const QByteArray &secret, QObject *parent) : QObject(parent)
 {
     this->p=new TokenUtilPvt();
-    dPvt();
-    p.secret=secret;
+
+    p->secret=secret;
 }
 
 TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, QObject *parent):QObject(parent)
 {
     this->p=new TokenUtilPvt();
-    dPvt();
-    p.secret=secret;
-    p.payload=payload;
+
+    p->secret=secret;
+    p->payload=payload;
 }
 
 TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, QObject *parent):QObject(parent)
 {
     this->p=new TokenUtilPvt();
-    dPvt();
-    p.secret=secret;
-    p.payload=payload;
-    p.algorithm=algorithm;
+
+    p->secret=secret;
+    p->payload=payload;
+    p->algorithm=algorithm;
 }
 
 TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in, QObject *parent):QObject(parent)
 {
-    this->p=new TokenUtilPvt();
-    dPvt();
-    p.secret=secret;
-    p.payload=payload;
-    p.algorithm=algorithm;
-    p.expires_in=expires_in;
+    this->p=new TokenUtilPvt{};
+    p->secret=secret;
+    p->payload=payload;
+    p->algorithm=algorithm;
+    p->expires_in=expires_in;
 }
 
 TokenUtil::~TokenUtil()
 {
-    dPvt();
-    delete&p;
+    delete p;
 }
 
 bool TokenUtil::isTokenValid()
 {
-    dPvt();
-    if (p.token.simplified().isEmpty())
+
+    if (p->token.simplified().isEmpty())
         return this->setLastError(tr("No avaliable token"));
 
-    auto tokenParts = p.token.split('.');
+    auto tokenParts = p->token.split('.');
     if (tokenParts.count() != 3)
         return this->setLastError(tr("ERROR : token must have the format xxxx.yyyyy.zzzzz"));
-    auto token = QJsonWebToken::fromTokenAndSecret(p.token, p.secret);
+    auto token = QJsonWebToken::fromTokenAndSecret(p->token, p->secret);
     return token.isValid();
 }
 
 bool TokenUtil::isExpired()
 {
-    dPvt();
-    if (!p.payload.isEmpty()){
-        auto claimEXP = p.payload.value(claim_exp).toLongLong();
+
+    if (!p->payload.isEmpty()){
+        auto claimEXP = p->payload.value(claim_exp).toLongLong();
         auto currentdate = QDateTime::currentDateTime().toSecsSinceEpoch();
         return  (claimEXP < currentdate);
     }
@@ -176,16 +174,16 @@ const QStringList&TokenUtil::supportedAlgorithm()
 
 QVariant&TokenUtil::lastError() const
 {
-    dPvt();
-    return p.lastError;
+
+    return p->lastError;
 }
 
 bool TokenUtil::setLastError(const QVariant &value)
 {
-    dPvt();
+
     auto err=value.toString().trimmed();
-    p.lastError = err.isEmpty()?QVariant():err;
-    return p.lastError.isValid();
+    p->lastError = err.isEmpty()?QVariant():err;
+    return p->lastError.isValid();
 }
 
 const QHash<QByteArray, eTokAlgorithm> &TokenUtil::algorithmType()
@@ -251,44 +249,44 @@ bool TokenUtil::verifyToken(const QByteArray &token, const QByteArray &secret)
 
 QByteArray&TokenUtil::token() const
 {
-    dPvt();
-    return p.token;
+
+    return p->token;
 }
 
 TokenUtil&TokenUtil::setToken(const QByteArray &value)
 {
-    dPvt();
-    p.token = value;
+
+    p->token = value;
     return*this;
 }
 
 Token TokenUtil::generateToken()
 {
-    dPvt();
-    return this->generateToken(p.secret, p.payload, p.algorithm, p.expires_in);
+
+    return this->generateToken(p->secret, p->payload, p->algorithm, p->expires_in);
 }
 
 Token TokenUtil::generateToken(const QByteArray &secre)
 {
-    dPvt();
-    return this->generateToken(secre, p.payload, p.algorithm, p.expires_in);
+
+    return this->generateToken(secre, p->payload, p->algorithm, p->expires_in);
 }
 
 Token TokenUtil::generateToken(const QByteArray &secre, const QHash<QByteArray, QByteArray> &payload)
 {
-    dPvt();
-    return this->generateToken(secre, payload, p.algorithm, p.expires_in);
+
+    return this->generateToken(secre, payload, p->algorithm, p->expires_in);
 }
 
 Token TokenUtil::generateToken(const QByteArray &secre, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm)
 {
-    dPvt();
-    return this->generateToken(secre, payload, algorithm, p.expires_in);
+
+    return this->generateToken(secre, payload, algorithm, p->expires_in);
 }
 
 Token TokenUtil::generateToken(const QByteArray&secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in)
 {
-    dPvt();
+
     Token token;
     token.eTokType=eTokType::JWT;
     token.tokenIat=QDateTime::currentDateTime().toLocalTime();
@@ -310,12 +308,12 @@ Token TokenUtil::generateToken(const QByteArray&secret, const QHash<QByteArray, 
         m_jwtObj.appendClaim(key, value);
     }
 
-    p.token=m_jwtObj.getToken();
+    p->token=m_jwtObj.getToken();
 
     token.tokenHeader=m_jwtObj.getHeaderJDoc().toJson(QJsonDocument::Compact);
     token.tokenPayload=m_jwtObj.getPayloadJDoc().toJson(QJsonDocument::Compact);
     token.tokenSignature=m_jwtObj.getSignatureBase64();
-    token.token=p.token;
+    token.token=p->token;
     return token;
 }
 
