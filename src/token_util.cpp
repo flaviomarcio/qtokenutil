@@ -112,7 +112,7 @@ TokenUtil::TokenUtil(const QByteArray &secret, QObject *parent) : QObject(parent
     p->secret=secret;
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, QObject *parent):QObject(parent)
+TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, QObject *parent):QObject{parent}
 {
     this->p=new TokenUtilPvt();
 
@@ -120,7 +120,7 @@ TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArra
     p->payload=payload;
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, QObject *parent):QObject(parent)
+TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, QObject *parent):QObject{parent}
 {
     this->p=new TokenUtilPvt();
 
@@ -129,7 +129,7 @@ TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArra
     p->algorithm=algorithm;
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in, QObject *parent):QObject(parent)
+TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in, QObject *parent):QObject{parent}
 {
     this->p=new TokenUtilPvt{};
     p->secret=secret;
@@ -172,7 +172,7 @@ const QStringList&TokenUtil::supportedAlgorithm()
     return supportedAlgorithms;
 }
 
-QVariant&TokenUtil::lastError() const
+QVariant &TokenUtil::lastError() const
 {
 
     return p->lastError;
