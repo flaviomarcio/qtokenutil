@@ -62,9 +62,6 @@ static const auto claims = makeClaims();
 static const auto supportedAlgorithms=QJsonWebToken::supportedAlgorithms();
 
 
-#define dPvt()\
-    auto &p = *reinterpret_cast<TokenUtilPvt*>(this->p)
-
 class TokenUtilPvt{
 public:
     QDateTime expires_in;
@@ -85,7 +82,7 @@ QByteArray Token::tokenMd5()const
     return Token::toMd5(this->token);
 }
 
-const QByteArray Token::toMd5(const QByteArray&bytes)
+const QByteArray Token::toMd5(const QByteArray &bytes)
 {
     return QCryptographicHash::hash(bytes, QCryptographicHash::Md5).toHex();
 }
@@ -196,7 +193,7 @@ const QHash<eTokAlgorithm, QByteArray> &TokenUtil::algorithmStr()
     return jwtAlgorithmStr;
 }
 
-eTokAlgorithm TokenUtil::algorithm(const QByteArray&alg)
+eTokAlgorithm TokenUtil::algorithm(const QByteArray &alg)
 {
     auto sAlg=alg.trimmed().toLower();
     auto &map=TokenUtil::algorithmType();
@@ -205,7 +202,7 @@ eTokAlgorithm TokenUtil::algorithm(const QByteArray&alg)
     return map.value(sAlg);
 }
 
-const QByteArray&TokenUtil::algorithmToStr(const eTokAlgorithm &algorithm)
+const QByteArray &TokenUtil::algorithmToStr(const eTokAlgorithm &algorithm)
 {
     return jwtAlgorithmStr[algorithm];
 }
@@ -247,7 +244,7 @@ bool TokenUtil::verifyToken(const QByteArray &token, const QByteArray &secret)
     return m_jwtObj.isValid();
 }
 
-QByteArray&TokenUtil::token() const
+QByteArray &TokenUtil::token() const
 {
 
     return p->token;
@@ -284,7 +281,7 @@ Token TokenUtil::generateToken(const QByteArray &secre, const QHash<QByteArray, 
     return this->generateToken(secre, payload, algorithm, p->expires_in);
 }
 
-Token TokenUtil::generateToken(const QByteArray&secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in)
+Token TokenUtil::generateToken(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in)
 {
 
     Token token;

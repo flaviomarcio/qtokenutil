@@ -113,7 +113,7 @@ public:
     //! \param secret
     //! \param parent
     //!
-    explicit TokenUtil(const QByteArray&secret, QObject *parent = nullptr);
+    explicit TokenUtil(const QByteArray &secret, QObject *parent = nullptr);
 
     //!
     //! \brief TokenUtil
@@ -121,7 +121,7 @@ public:
     //! \param payload
     //! \param parent
     //!
-    explicit TokenUtil(const QByteArray&secret, const QHash<QByteArray,QByteArray>&payload, QObject *parent = nullptr);
+    explicit TokenUtil(const QByteArray &secret, const QHash<QByteArray,QByteArray>&payload, QObject *parent = nullptr);
 
     //!
     //! \brief TokenUtil
@@ -130,7 +130,7 @@ public:
     //! \param algorithm
     //! \param parent
     //!
-    explicit TokenUtil(const QByteArray&secret, const QHash<QByteArray,QByteArray>&payload, const eTokAlgorithm&algorithm, QObject *parent = nullptr);
+    explicit TokenUtil(const QByteArray &secret, const QHash<QByteArray,QByteArray>&payload, const eTokAlgorithm&algorithm, QObject *parent = nullptr);
 
     //!
     //! \brief TokenUtil
@@ -140,7 +140,7 @@ public:
     //! \param expires_in
     //! \param parent
     //!
-    explicit TokenUtil(const QByteArray&secret, const QHash<QByteArray,QByteArray>&payload, const eTokAlgorithm&algorithm, const QDateTime&expires_in, QObject *parent = nullptr);
+    explicit TokenUtil(const QByteArray &secret, const QHash<QByteArray,QByteArray>&payload, const eTokAlgorithm&algorithm, const QDateTime&expires_in, QObject *parent = nullptr);
 
     //!
     //! \brief TokenUtil
@@ -171,7 +171,7 @@ public:
     //! \param secre
     //! \return
     //!
-    Token generateToken(const QByteArray&secre);
+    Token generateToken(const QByteArray &secre);
 
     //!
     //! \brief generateToken
@@ -179,7 +179,7 @@ public:
     //! \param payload
     //! \return
     //!
-    Token generateToken(const QByteArray&secre, const QHash<QByteArray,QByteArray> &payload);
+    Token generateToken(const QByteArray &secre, const QHash<QByteArray,QByteArray> &payload);
 
     //!
     //! \brief generateToken
@@ -188,7 +188,7 @@ public:
     //! \param algorithm
     //! \return
     //!
-    Token generateToken(const QByteArray&secre, const QHash<QByteArray,QByteArray> &payload, const eTokAlgorithm&algorithm);
+    Token generateToken(const QByteArray &secre, const QHash<QByteArray,QByteArray> &payload, const eTokAlgorithm&algorithm);
 
     //!
     //! \brief generateToken
@@ -249,7 +249,7 @@ public:
     //! \param alg
     //! \return
     //!
-    static eTokAlgorithm algorithm(const QByteArray&alg);
+    static eTokAlgorithm algorithm(const QByteArray &alg);
 
     //!
     //! \brief algorithmToStr
@@ -270,14 +270,14 @@ public:
     //! \param alg
     //! \return
     //!
-    static bool isValidAlgorithm(const QByteArray&alg);
+    static bool isValidAlgorithm(const QByteArray &alg);
 
     //!
     //! \brief readFromToken
     //! \param token
     //! \return
     //!
-    static Token readFromToken(const QByteArray&token);
+    static Token readFromToken(const QByteArray &token);
 
     //!
     //! \brief verifyToken
@@ -285,7 +285,7 @@ public:
     //! \param secret
     //! \return
     //!
-    static bool verifyToken(const QByteArray&token, const QByteArray&secret);
+    static bool verifyToken(const QByteArray &token, const QByteArray &secret);
 
 private:
     TokenUtilPvt *p=nullptr;
