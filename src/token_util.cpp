@@ -254,7 +254,7 @@ TokenUtil&TokenUtil::setToken(const QByteArray &value)
 {
 
     p->token = value;
-    return*this;
+    return *this;
 }
 
 Token TokenUtil::generateToken()
