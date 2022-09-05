@@ -89,12 +89,9 @@ const QByteArray Token::toMd5(const QByteArray &bytes)
 
 QVariantHash Token::toReturnHash()const
 {
-    return QVariantHash
-    {
-        {QByteArrayLiteral("token"),this->token},
-        {QByteArrayLiteral("iat"),this->tokenIat},
-        {QByteArrayLiteral("exp"),this->tokenExp}
-    };
+    return QVariantHash{{QByteArrayLiteral("token"), this->token},
+                        {QByteArrayLiteral("iat"), this->tokenIat},
+                        {QByteArrayLiteral("exp"), this->tokenExp}};
 }
 
 TokenUtil::TokenUtil(QObject *parent) : QObject(parent)
