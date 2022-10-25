@@ -143,11 +143,6 @@ public:
     explicit TokenUtil(const QByteArray &secret, const QHash<QByteArray,QByteArray>&payload, const eTokAlgorithm&algorithm, const QDateTime&expires_in, QObject *parent = nullptr);
 
     //!
-    //! \brief TokenUtil
-    //!
-    ~TokenUtil();
-
-    //!
     //! \brief token
     //! \return
     //!
