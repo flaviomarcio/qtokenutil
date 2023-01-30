@@ -3,6 +3,10 @@
 #include "../../qjsonwebtoken/qjsonwebtoken.h"
 #include <QDateTime>
 
+static const auto __token="token";
+static const auto __iat="iat";
+static const auto __exp_="exp";
+
 namespace QToken {
 
 auto makeAlgorithmType()
@@ -86,9 +90,9 @@ const QByteArray Token::toMd5(const QByteArray &bytes)
 
 QVariantHash Token::toReturnHash()const
 {
-    return QVariantHash{{QByteArrayLiteral("token"), this->token},
-                        {QByteArrayLiteral("iat"), this->tokenIat},
-                        {QByteArrayLiteral("exp"), this->tokenExp}};
+    return QVariantHash{{__token, this->token},
+                        {__iat, this->tokenIat},
+                        {__exp_, this->tokenExp}};
 }
 
 TokenUtil::TokenUtil(QObject *parent) : QObject(parent)
