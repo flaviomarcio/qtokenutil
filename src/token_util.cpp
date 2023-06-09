@@ -95,12 +95,12 @@ QVariantHash Token::toReturnHash()const
                         {__exp_, this->tokenExp}};
 }
 
-TokenUtil::TokenUtil(QObject *parent) : QObject(parent)
+TokenUtil::TokenUtil(QObject *parent) : QObject{parent}
 {
     this->p=new TokenUtilPvt{this};
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, QObject *parent) : QObject(parent)
+TokenUtil::TokenUtil(const QByteArray &secret, QObject *parent) : QObject{parent}
 {
     this->p=new TokenUtilPvt{this};
 
