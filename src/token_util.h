@@ -140,7 +140,7 @@ public:
     //! \param expires_in
     //! \param parent
     //!
-    explicit TokenUtil(const QByteArray &secret, const QHash<QByteArray,QByteArray>&payload, const eTokAlgorithm&algorithm, const QDateTime&expires_in, QObject *parent = nullptr);
+    explicit TokenUtil(const QByteArray &secret, const QHash<QByteArray,QByteArray>&payload, const eTokAlgorithm&algorithm, const QDateTime &expires_in, QObject *parent = nullptr);
 
     //!
     //! \brief token
