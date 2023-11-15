@@ -95,38 +95,30 @@ QVariantHash Token::toReturnHash()const
                         {__exp_, this->tokenExp}};
 }
 
-TokenUtil::TokenUtil(QObject *parent) : QObject{parent}
+TokenUtil::TokenUtil(QObject *parent) : QObject{parent}, p{new TokenUtilPvt{this}}
 {
-    this->p=new TokenUtilPvt{this};
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, QObject *parent) : QObject{parent}
+TokenUtil::TokenUtil(const QByteArray &secret, QObject *parent) : QObject{parent}, p{new TokenUtilPvt{this}}
 {
-    this->p=new TokenUtilPvt{this};
-
     p->secret=secret;
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, QObject *parent):QObject{parent}
+TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, QObject *parent):QObject{parent}, p{new TokenUtilPvt{this}}
 {
-    this->p=new TokenUtilPvt{this};
-
     p->secret=secret;
     p->payload=payload;
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, QObject *parent):QObject{parent}
+TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, QObject *parent):QObject{parent}, p{new TokenUtilPvt{this}}
 {
-    this->p=new TokenUtilPvt{this};
-
     p->secret=secret;
     p->payload=payload;
     p->algorithm=algorithm;
 }
 
-TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in, QObject *parent):QObject{parent}
+TokenUtil::TokenUtil(const QByteArray &secret, const QHash<QByteArray, QByteArray> &payload, const eTokAlgorithm &algorithm, const QDateTime &expires_in, QObject *parent):QObject{parent}, p{new TokenUtilPvt{this}}
 {
-    this->p=new TokenUtilPvt{this};
     p->secret=secret;
     p->payload=payload;
     p->algorithm=algorithm;
